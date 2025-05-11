@@ -42,12 +42,12 @@ args = parser.parse_args()
 numeric_level = getattr(logging, args.log, None)
 logging.basicConfig(level=numeric_level)
 
-
 def get_correctly_labeled_entries(all_entries):
-    """Get entries that are labeled and evaluated as correct."""
-    return [
-        entry for entry in all_entries if convert_to_bool(entry[9]) and convert_to_bool(entry[10])
-    ]
+    cleaned = []
+    for entry in all_entries:
+        if len(entry) >= 11 and convert_to_bool(entry[9]) and convert_to_bool(entry[10]):
+            cleaned.append(entry)
+    return cleaned
 
 
 def download_csv_dataset(csv_url, dataset_csv_path):
